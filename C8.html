@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="btn1">Get the location</button>
+    <script>
+      function whereAmI(lat, lng) {
+        const apiUrl = `https://geocode.xyz/${lat},${lng}?geoit=json`;
+
+        fetch(apiUrl)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error(`Network response was not ok`);
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Process the geocoding data
+            const city = data.city;
+            const country = data.country;
+
+            // Check if the data contains city and country information
+            if (city && country) {
+              console.log(`You are in ${city}, ${country}`);
+            } else {
+              console.log(`Location data not found for ${lat},${lng}`);
+            }
+          })
+          .catch((error) => {
+            console.error(`Error: ${error.message}`);
+          });
+      }
+
+      // Example usage:
+
+      whereAmI(52.508, 13.381); // Replace with your desired latitude and longitude
+    </script>
+  </body>
+</html>
